@@ -1,6 +1,7 @@
 import { TextAnimate } from "@/components/magicui/text-animate";
 import { AuroraText } from "@/components/magicui/aurora-text";
-import { HandCoins } from "lucide-react";
+import { List } from "@/components/custom/landing/List";
+import GradientButton from "@/components/custom/landing/GradientButton";
 const Content = () => {
   return (
     <>
@@ -12,10 +13,18 @@ const Content = () => {
             Your way
           </AuroraText>
           <TextAnimate className="text-base text-gray-600">
-            Spend, save and manage your money, all in one place. Open a full bank account from your phone, for free.
+            Spend, save and manage your money, all in one place. Open a full
+            bank account from your phone, for free.
           </TextAnimate>
+          <div className="flex items-center justify-start">
+            <GradientButton className="scale-80" link="/login" icon="✨">
+              Get Started Now
+            </GradientButton>
+          </div>
         </div>
-        <div>hello</div>
+        <div>
+          <List className="scale-80" />
+        </div>
       </div>
     </>
   );
