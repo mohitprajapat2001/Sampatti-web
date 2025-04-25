@@ -2,8 +2,8 @@ import NavLanding from "@/components/custom/landing/NavLanding";
 import Content from "@/components/custom/landing/Content";
 import { GlobeComponent } from "@/components/custom/landing/Globe";
 import { VelocityScroll } from "@/components/magicui/scroll-based-velocity";
-import { HyperText } from "@/components/magicui/hyper-text";
-import Features from "@/components/custom/landing/Features";
+// import { HyperText } from "@/components/magicui/hyper-text";
+// import Features from "@/components/custom/landing/Features";
 import Statistics from "@/components/custom/landing/Statistics";
 import Community from "@/components/custom/landing/Community";
 import Footer from "@/components/custom/landing/Footer";
@@ -27,12 +27,12 @@ function Landing() {
               <div className="pointer-events-none absolute inset-y-0 left-0 w-1/4 bg-gradient-to-r from-background"></div>
               <div className="pointer-events-none absolute inset-y-0 right-0 w-1/4 bg-gradient-to-l from-background"></div>
             </div>
-            <div className="border-b">
+            {/* <div className="border-b">
               <HyperText className="pointer-events-none whitespace-pre-wrap bg-gradient-to-b from-black to-gray-300/80 bg-clip-text text-center text-8xl font-semibold leading-none text-transparent dark:from-white dark:to-slate-900/10 pt-10">
                 Features
               </HyperText>
               <Features />
-            </div>
+            </div> */}
             <div>
               <Statistics />
             </div>
