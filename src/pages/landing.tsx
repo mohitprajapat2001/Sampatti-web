@@ -1,6 +1,6 @@
 import NavLanding from "@/components/custom/landing/NavLanding";
 import Content from "@/components/custom/landing/Content";
-import { GlobeComponent } from "@/components/custom/landing/Globe";
+import { HeroVideoDialogDemoTopInBottomOut } from "@/components/custom/landing/VideoComponent";
 import { VelocityScroll } from "@/components/magicui/scroll-based-velocity";
 // import { HyperText } from "@/components/magicui/hyper-text";
 // import Features from "@/components/custom/landing/Features";
@@ -16,7 +16,7 @@ function Landing() {
           <NavLanding />
           <div className="w-4xl mx-auto border-l border-r border-slate-100 bg-transparent">
             <Content />
-            <GlobeComponent />
+            <HeroVideoDialogDemoTopInBottomOut />
             <div className="relative flex w-full flex-col items-center justify-center overflow-hidden border-b py-5">
               <VelocityScroll numRows={1} defaultVelocity={1}>
                 Secure your future with our investment solutions. Visit us.
