@@ -12,6 +12,8 @@ const Register = () => {
   const { toggle, setToggle } = useUtilsContext();
   const handleSubmit = (e) => {
     e.preventDefault();
+    const data = new FormData(e.target);
+    console.log(data);
     console.log("Form submitted");
   };
   return (
@@ -28,13 +30,41 @@ const Register = () => {
             <form
               onSubmit={handleSubmit}
               method="POST"
-              className="w-full h-96 flex flex-col gap-3 overflow-auto"
+              className="w-full flex flex-col gap-3 overflow-auto"
             >
+              <div className="flex items-center justify-between w-full">
+                <div
+                  className="flex flex-col gap-2 justify-start items-start"
+                  id="first_name-legend"
+                >
+                  <Label htmlFor="first_name">Firstname</Label>
+                  <Input
+                    name="first_name"
+                    placeholder="Enter Firstname"
+                    type="first_name"
+                    id="first_name"
+                    autoComplete="false"
+                  />
+                </div>
+                <div
+                  className="flex flex-col gap-2 justify-start items-start"
+                  id="last_name-legend"
+                >
+                  <Label htmlFor="last_name">Lastname</Label>
+                  <Input
+                    name="last_name"
+                    placeholder="Enter Lastname"
+                    type="last_name"
+                    id="last_name"
+                    autoComplete="false"
+                  />
+                </div>
+              </div>
               <div
                 className="flex flex-col gap-2 justify-start items-start"
                 id="email-legend"
               >
-                <Label htmlFor="email">Email</Label>
+                <Label htmlFor="email">Email*</Label>
                 <Input
                   name="email"
                   placeholder="Enter Email Address"
@@ -45,82 +75,53 @@ const Register = () => {
               </div>
               <div
                 className="flex flex-col gap-2 justify-start items-start"
-                id="email-legend"
+                id="username-legend"
               >
-                <Label htmlFor="email">Email</Label>
+                <Label htmlFor="username">Username</Label>
                 <Input
-                  name="email"
-                  placeholder="Enter Email Address"
-                  type="email"
-                  id="email"
+                  name="username"
+                  placeholder="Choose Username"
+                  type="username"
+                  id="username"
                   autoComplete="false"
                 />
+                <p className="text-xs italic text-gray-500">
+                  choose username else default username is generated.
+                </p>
               </div>
-              <div
-                className="flex flex-col gap-2 justify-start items-start"
-                id="email-legend"
-              >
-                <Label htmlFor="email">Email</Label>
-                <Input
-                  name="email"
-                  placeholder="Enter Email Address"
-                  type="email"
-                  id="email"
-                  autoComplete="false"
-                />
+              <div className="flex items-center justify-between w-full">
+                <div
+                  className="flex flex-col gap-2 justify-start items-start"
+                  id="password-legend"
+                >
+                  <Label htmlFor="password">Password</Label>
+                  <Input
+                    name="password"
+                    placeholder="Choose Password"
+                    type={toggle ? "password" : "text"}
+                    id="password"
+                    autoComplete="false"
+                  />
+                </div>
+                <div
+                  className="flex flex-col gap-2 justify-start items-start"
+                  id="confirm_password-legend"
+                >
+                  <Label htmlFor="confirm_password">Confirm Password</Label>
+                  <Input
+                    name="confirm_password"
+                    placeholder="Confirm Password"
+                    type={toggle ? "password" : "text"}
+                    id="confirm_password"
+                    autoComplete="false"
+                  />
+                </div>
               </div>
-              <div
-                className="flex flex-col gap-2 justify-start items-start"
-                id="email-legend"
-              >
-                <Label htmlFor="email">Email</Label>
-                <Input
-                  name="email"
-                  placeholder="Enter Email Address"
-                  type="email"
-                  id="email"
-                  autoComplete="false"
-                />
-              </div>
-              <div
-                className="flex flex-col gap-2 justify-start items-start"
-                id="email-legend"
-              >
-                <Label htmlFor="email">Email</Label>
-                <Input
-                  name="email"
-                  placeholder="Enter Email Address"
-                  type="email"
-                  id="email"
-                  autoComplete="false"
-                />
-              </div>
-              <div
-                className="flex flex-col gap-2 justify-start items-start"
-                id="email-legend"
-              >
-                <Label htmlFor="email">Email</Label>
-                <Input
-                  name="email"
-                  placeholder="Enter Email Address"
-                  type="email"
-                  id="email"
-                  autoComplete="false"
-                />
-              </div>
-              <div
-                className="flex flex-col gap-2 justify-start items-start"
-                id="password-legend"
-              >
-                <Label htmlFor="password">Password</Label>
-                <Input
-                  type={!toggle ? "text" : "password"}
-                  placeholder="Enter Password"
-                  name="password"
-                  id="password"
-                  autoComplete="false"
-                />
-              </div>
+              <p className="text-xs italic">
+                Password must be at least 8 characters long and contain at least
+                one uppercase letter, one lowercase letter, one number, and one
+                special character.
+              </p>
               <div className="flex items-center justify-center w-full">
                 <div className="flex items-center space-x-2 w-full">
                   <Switch
@@ -144,7 +145,7 @@ const Register = () => {
                 type="submit"
                 className="cursor-pointer scale-100 hover:scale-98"
               >
-                Login
+                Register
               </Button>
             </form>
           </div>
