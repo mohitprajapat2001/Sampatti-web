@@ -9,7 +9,7 @@ export const PORT = "8000/";
 export const ApiUrl = HTTP + HOST + PORT;
 
 export const UrlPaths = {
-  LOGIN: "users/login/",
+  LOGIN: "users/login",
   REFRESH: "users/login/refresh/",
   REGISTER: "users/register/",
 };

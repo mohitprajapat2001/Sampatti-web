@@ -3,16 +3,18 @@ import { NeonGradientCard } from "@/components/magicui/neon-gradient-card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useUtilsContext } from "@/providers/utils-providers";
+import { useAuthContext } from "@/providers/auth-providers";
 import { Switch } from "@/components/ui/switch";
 import { AnimatedShinyText } from "@/components/magicui/animated-shiny-text";
 import { ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 const Login = () => {
+  const { loginUser } = useAuthContext();
   const { toggle, setToggle } = useUtilsContext();
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log("Form submitted");
+    loginUser(new FormData(e.currentTarget));
   };
   return (
     <div className="h-screen w-full flex items-center justify-center">
