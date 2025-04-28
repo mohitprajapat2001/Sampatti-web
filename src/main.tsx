@@ -4,12 +4,15 @@ import "./index.css";
 import { AppRoutes } from "@/routes";
 import { ThemeProvider } from "@/providers/theme-providers";
 import { UtilsProvider } from "./providers/utils-providers";
+import { TokenProvider } from "./providers/token-provider";
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <UtilsProvider>
-      <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
-        <AppRoutes />
-      </ThemeProvider>
-    </UtilsProvider>
+    <TokenProvider>
+      <UtilsProvider>
+        <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
+          <AppRoutes />
+        </ThemeProvider>
+      </UtilsProvider>
+    </TokenProvider>
   </StrictMode>
 );
