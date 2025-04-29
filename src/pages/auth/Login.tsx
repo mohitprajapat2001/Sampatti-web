@@ -9,13 +9,29 @@ import { AnimatedShinyText } from "@/components/magicui/animated-shiny-text";
 import { ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
+import { useForm, SubmitHandler } from "react-hook-form";
+
+type Inputs = {
+  first_name: string;
+  last_name: string;
+  email: RegExp;
+  username: string;
+  password: RegExp;
+  confirm_password: RegExp;
+};
+
 const Login = () => {
   const { loginUser } = useAuthContext();
   const { toggle, setToggle } = useUtilsContext();
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    loginUser(new FormData(e.currentTarget));
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<Inputs>();
+  const onSubmit: SubmitHandler<Inputs> = (data) => {
+    loginUser(data);
   };
+
   return (
     <div className="h-screen w-full flex items-center justify-center">
       <div className="w-xl">
@@ -28,7 +44,7 @@ const Login = () => {
               </p>
             </div>
             <form
-              onSubmit={handleSubmit}
+              onSubmit={handleSubmit(onSubmit)}
               method="POST"
               className="w-full flex flex-col gap-3"
             >
@@ -38,12 +54,22 @@ const Login = () => {
               >
                 <Label htmlFor="email">Email</Label>
                 <Input
+                  {...register("email", {
+                    required: "Field is required",
+                    pattern: {
+                      value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                      message: "Invalid email address",
+                    },
+                  })}
                   name="email"
                   placeholder="Enter Email Address"
                   type="email"
                   id="email"
                   autoComplete="false"
                 />
+                <p className="text-xs italic text-destructive">
+                  {errors.email?.message}
+                </p>
               </div>
               <div
                 className="flex flex-col gap-2 justify-start items-start"
@@ -51,12 +77,18 @@ const Login = () => {
               >
                 <Label htmlFor="password">Password</Label>
                 <Input
+                  {...register("password", {
+                    required: "Field is required",
+                  })}
                   type={!toggle ? "text" : "password"}
                   placeholder="Enter Password"
                   name="password"
                   id="password"
                   autoComplete="false"
                 />
+                <p className="text-xs italic text-destructive">
+                  {errors.password?.message}
+                </p>
               </div>
               <div className="flex items-center justify-center w-full">
                 <div className="flex items-center space-x-2 w-full">
