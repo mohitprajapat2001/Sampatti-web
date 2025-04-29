@@ -1,9 +1,11 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
-import { getLocalStorage } from "@/utils/utils";
 import { getApiUrl } from "@/utils/constants";
 import { postRequest } from "@/utils/axios-request";
+import { loginError } from "@/utils/error";
+import { loginSuccess } from "@/utils/success";
+import { LoadingMessage } from "@/utils/loading-messages";
+import { loadingToast } from "@/utils/message-utils";
 const loginUrl = getApiUrl("LOGIN");
-const refreshUrl = getApiUrl("REFRESH");
 
 interface AuthContextType {
   auth: object;
@@ -13,17 +15,30 @@ interface AuthContextType {
 const AuthContext = createContext<AuthContextType | null>(null);
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
+  let id = null;
   const { auth, setAuth } = useState<object>({});
   const loginUser = async (formdata: object) => {
-    const response = await postRequest(loginUrl, formdata, null, null, null, null);
+    id = loadingToast(LoadingMessage.LOGIN, null);
+    const response = await postRequest(
+      loginUrl,
+      formdata,
+      id,
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      },
+      loginSuccess
+    );
     if (response) {
       console.log("Login response", response);
     }
-  }
+  };
 
-  useEffect(() => { });
+  useEffect(() => {});
   const data = {
-    auth, loginUser
+    auth,
+    loginUser,
   };
   return <AuthContext.Provider value={data}>{children}</AuthContext.Provider>;
 };

@@ -10,7 +10,7 @@ export const ApiUrl = HTTP + HOST + PORT;
 
 export const UrlPaths = {
   LOGIN: "users/login",
-  REFRESH: "users/login/refresh/",
+  REFRESH: "users/login/refresh",
   REGISTER: "users/register/",
 };
 
