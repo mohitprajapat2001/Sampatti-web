@@ -9,6 +9,7 @@ import { ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { useForm, SubmitHandler } from "react-hook-form";
+import { useAuthContext } from "@/providers/auth-providers";
 
 type Inputs = {
   first_name: string;
@@ -20,13 +21,16 @@ type Inputs = {
 };
 const Register = () => {
   const { toggle, setToggle } = useUtilsContext();
+  const { registerUser } = useAuthContext();
   const {
     register,
     watch,
     handleSubmit,
     formState: { errors },
   } = useForm<Inputs>();
-  const onSubmit: SubmitHandler<Inputs> = (data) => console.log(data);
+  const onSubmit: SubmitHandler<Inputs> = (data) => {
+    registerUser(data);
+  };
   return (
     <div className="h-screen w-full flex items-center justify-center">
       <div className="w-xl">
@@ -117,7 +121,6 @@ const Register = () => {
                   type="username"
                   id="username"
                   autoComplete="false"
-                  required
                 />
                 <p className="text-xs italic text-gray-500">
                   choose username else default username is generated.

@@ -11,7 +11,7 @@ export const ApiUrl = HTTP + HOST + PORT;
 export const UrlPaths = {
   LOGIN: "users/login",
   REFRESH: "users/login/refresh",
-  REGISTER: "users/register/",
+  REGISTER: "users/register",
 };
 
 export const getApiUrl = (path: string) => {

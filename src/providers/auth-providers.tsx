@@ -1,15 +1,17 @@
+/* eslint-disable */
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { getApiUrl } from "@/utils/constants";
 import { postRequest } from "@/utils/axios-request";
-import { loginError } from "@/utils/error";
-import { loginSuccess } from "@/utils/success";
+import { loginSuccess, registerSuccess } from "@/utils/success";
 import { LoadingMessage } from "@/utils/loading-messages";
 import { loadingToast } from "@/utils/message-utils";
 const loginUrl = getApiUrl("LOGIN");
+const registerUrl = getApiUrl("REGISTER");
 
 interface AuthContextType {
   auth: object;
   loginUser: (formdata: object) => Promise<void>;
+  registerUser: (formdata: object) => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType | null>(null);
@@ -19,7 +21,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const { auth, setAuth } = useState<object>({});
   const loginUser = async (formdata: object) => {
     id = loadingToast(LoadingMessage.LOGIN, null);
-    const response = await postRequest(
+    await postRequest(
       loginUrl,
       formdata,
       id,
@@ -30,15 +32,29 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       },
       loginSuccess
     );
-    if (response) {
-      console.log("Login response", response);
-    }
   };
 
-  useEffect(() => {});
+  const registerUser = async (formdata: object) => {
+    id = loadingToast(LoadingMessage.REGISTER, null);
+    await postRequest(
+      registerUrl,
+      formdata,
+      id,
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      },
+      registerSuccess
+    );
+  };
+  useEffect(() => {
+    console.log(setAuth);
+  });
   const data = {
     auth,
     loginUser,
+    registerUser,
   };
   return <AuthContext.Provider value={data}>{children}</AuthContext.Provider>;
 };

@@ -35,10 +35,9 @@ export async function axiosRequest(
       data,
       ...config,
     });
-    if (response.status === 200)
-      if (callback) {
-        callback(id, response);
-      }
+    if (callback) {
+      callback(id, response);
+    }
     return response;
   } catch (error: any) {
     if (error.response.status === 400) {
