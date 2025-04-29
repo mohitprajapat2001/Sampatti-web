@@ -32,7 +32,6 @@ createRoot(document.getElementById("root")!).render(
               theme="dark"
               position="top-right"
               autoClose={5000}
-              newestOnTop={true}
               stacked
             />
             <AppRoutes />

@@ -10,6 +10,7 @@ import {
   exception404,
   exception500,
 } from "./exception-handling";
+import { Id } from "react-toastify";
 /**
  * Common function for axios requests
  * @param url string
@@ -23,9 +24,9 @@ export async function axiosRequest(
   url: string,
   method: "GET" | "POST" | "PATCH" | "PUT" | "DELETE",
   data: any = null,
-  id: number,
+  id: Id,
   config: AxiosRequestConfig = {},
-  callback?: (id: number, response: AxiosResponse) => void
+  callback?: (id: Id, response: AxiosResponse) => void
 ) {
   try {
     const response = await axios({
@@ -67,9 +68,9 @@ export async function axiosRequest(
  */
 export async function getRequest(
   url: string,
-  id: number,
+  id: Id,
   config: AxiosRequestConfig = {},
-  callback?: (id: number, response: AxiosResponse) => void
+  callback?: (id: Id, response: AxiosResponse) => void
 ) {
   return axiosRequest(url, "GET", null, id, config, callback);
 }
@@ -80,9 +81,9 @@ export async function getRequest(
 export async function postRequest(
   url: string,
   data: any,
-  id: number,
+  id: Id,
   config: AxiosRequestConfig = {},
-  callback?: (id: number, response: AxiosResponse) => void
+  callback?: (id: Id, response: AxiosResponse) => void
 ) {
   return axiosRequest(url, "POST", data, id, config, callback);
 }
@@ -93,9 +94,9 @@ export async function postRequest(
 export async function patchRequest(
   url: string,
   data: any,
-  id: number,
+  id: Id,
   config: AxiosRequestConfig = {},
-  callback?: (id: number, response: AxiosResponse) => void
+  callback?: (id: Id, response: AxiosResponse) => void
 ) {
   return axiosRequest(url, "PATCH", data, id, config, callback);
 }
@@ -106,9 +107,9 @@ export async function patchRequest(
 export async function putRequest(
   url: string,
   data: any,
-  id: number,
+  id: Id,
   config: AxiosRequestConfig = {},
-  callback?: (id: number, response: AxiosResponse) => void
+  callback?: (id: Id, response: AxiosResponse) => void
 ) {
   return axiosRequest(url, "PUT", data, id, config, callback);
 }
@@ -118,9 +119,9 @@ export async function putRequest(
  */
 export async function deleteRequest(
   url: string,
-  id: number,
+  id: Id,
   config: AxiosRequestConfig = {},
-  callback?: (id: number, response: AxiosResponse) => void
+  callback?: (id: Id, response: AxiosResponse) => void
 ) {
   return axiosRequest(url, "DELETE", null, id, config, callback);
 }

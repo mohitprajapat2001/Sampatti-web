@@ -1,13 +1,13 @@
 /**
  * Sampatti toast message utils
  */
-import { toast } from "react-toastify";
+import { toast, Id, TypeOptions } from "react-toastify";
 import { redirectPageLazy } from "./utils";
 
-const UpdateToast = (id: number, message: string, typee: string) => {
+const UpdateToast = (id: Id, message: string, typee: string) => {
   toast.update(id, {
     render: message,
-    type: typee,
+    type: typee as TypeOptions,
     isLoading: false,
     autoClose: 7000,
     draggable: true,
@@ -19,15 +19,11 @@ export const loadingToast = (message: string, options: any) => {
   return toast.loading(message, options);
 };
 
-export const errorToast = (id: number, message: string) => {
+export const errorToast = (id: Id, message: string) => {
   UpdateToast(id, message, "error");
 };
 
-export const successToast = (
-  id: number,
-  message: string,
-  successUrl: string
-) => {
+export const successToast = (id: Id, message: string, successUrl: string) => {
   UpdateToast(id, message, "success");
   if (successUrl) {
     redirectPageLazy(successUrl);

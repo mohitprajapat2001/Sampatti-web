@@ -5,6 +5,7 @@
 
 import axios from "axios";
 import { AxiosResponse } from "axios";
+import { Id } from "react-toastify";
 import {
   getLocalStorage,
   setLocalStorage,
@@ -33,7 +34,7 @@ async function refreshAccessToken() {
     return false;
   }
 }
-export const exception400 = (id: number, errors: any) => {
+export const exception400 = (id: Id, errors: any) => {
   debugger;
 };
 
@@ -41,9 +42,9 @@ export const exception401 = async (
   url: string,
   method: "GET" | "POST" | "PATCH" | "PUT" | "DELETE",
   data: any,
-  id: number,
+  id: Id,
   config: any,
-  callback: (id: number, response: AxiosResponse) => void,
+  callback: (id: Id, response: AxiosResponse) => void,
   error: any
 ) => {
   if (error.detail) {
@@ -57,14 +58,14 @@ export const exception401 = async (
   }
 };
 
-export const exception403 = (id: number, errors: any) => {
+export const exception403 = (id: Id, errors: any) => {
   debugger;
 };
 
-export const exception404 = (id: number, errors: any) => {
+export const exception404 = (id: Id, errors: any) => {
   debugger;
 };
 
-export const exception500 = (id: number, errors: any) => {
+export const exception500 = (id: Id, errors: any) => {
   debugger;
 };
