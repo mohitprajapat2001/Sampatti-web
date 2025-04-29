@@ -34,10 +34,24 @@ async function refreshAccessToken() {
     return false;
   }
 }
-export const exception400 = (id: Id, errors: any) => {
-  debugger;
-};
 
+/**
+ * Default 400 Bad request exception handling
+ * @param id Id
+ * @param errors any
+ */
+export const exception400 = (id: Id, errors: any) => {};
+
+/**
+ * Default 401 Unauthorized exception handling
+ * @param url string
+ * @param method string
+ * @param data any
+ * @param id Id
+ * @param config any
+ * @param callback ()=>{}
+ * @param error any
+ */
 export const exception401 = async (
   url: string,
   method: "GET" | "POST" | "PATCH" | "PUT" | "DELETE",

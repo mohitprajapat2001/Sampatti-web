@@ -7,6 +7,8 @@ import { VelocityScroll } from "@/components/magicui/scroll-based-velocity";
 import Statistics from "@/components/custom/landing/Statistics";
 import Community from "@/components/custom/landing/Community";
 import Footer from "@/components/custom/landing/Footer";
+import { Particles } from "@/components/magicui/particles";
+
 function Landing() {
   return (
     <>
@@ -43,6 +45,9 @@ function Landing() {
               <Footer />
             </div>
           </div>
+        </div>
+        <div className="fixed inset-0 z-[-10]">
+          <Particles />
         </div>
       </div>
     </>
