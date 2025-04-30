@@ -21,3 +21,5 @@ export const getApiUrl = (path: string) => {
   }
   return ApiUrl + urlPath;
 };
+
+export const ignoreUrls = ["/login", "/login/", "/register", "/register/"];

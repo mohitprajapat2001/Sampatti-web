@@ -58,7 +58,10 @@ const Community = () => {
               </div>
 
               {/* Call to Action */}
-              <Link to="https://github.com/mohitprajapat2001/sampatti-web">
+              <Link
+                to="https://github.com/mohitprajapat2001/sampatti-web"
+                target="_blank"
+              >
                 <Button
                   className="relative overflow-hidden cursor-pointer hover:scale-98 hover:shadow-xl"
                   size="lg"
