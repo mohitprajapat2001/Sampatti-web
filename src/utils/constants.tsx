@@ -23,3 +23,9 @@ export const getApiUrl = (path: string) => {
 };
 
 export const ignoreUrls = ["/login", "/login/", "/register", "/register/"];
+
+export const RoutesPaths = {
+  LOGIN: "/login",
+  REGISTER: "/register",
+  DASHBOARD: "/dashboard",
+};
