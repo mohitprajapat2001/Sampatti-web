@@ -2,17 +2,16 @@
 /**
  * Sampatti Default Exception handling
  */
-
 import axios from "axios";
 import { AxiosResponse } from "axios";
-import { Id } from "react-toastify";
+import { Id, toast } from "react-toastify";
 import {
   getLocalStorage,
   setLocalStorage,
   removeLocalStorage,
   redirectPage,
 } from "./utils";
-import { getApiUrl } from "./constants";
+import { getApiUrl, ignoreUrls } from "./constants";
 import { axiosRequest } from "./axios-request";
 import { errorToast } from "./message-utils";
 
@@ -40,7 +39,37 @@ async function refreshAccessToken() {
  * @param id Id
  * @param errors any
  */
-export const exception400 = (id: Id, errors: any) => {};
+export const exception400 = (id: Id, errors: any) => {
+  let toastUpdate = true;
+  Object.entries(errors).forEach(([key, value]) => {
+    let element = document.querySelector(`input[name="${key}"]`);
+    if (element) {
+      if (element.nextElementSibling) {
+        element.nextElementSibling.innerHTML = String(value);
+      }
+      delete errors[key];
+    } else {
+      if (toastUpdate) {
+        toastUpdate = false;
+        if (Array.isArray(value)) {
+          errorToast(id, value[0]);
+        } else {
+          errorToast(id, String(value));
+        }
+      } else {
+        if (Array.isArray(value)) {
+          toast.error(value[0]);
+        } else {
+          toast.error(String(value));
+        }
+      }
+    }
+    if (toastUpdate) {
+      toastUpdate = false;
+      errorToast(id, "Please check the form and correct the errors.");
+    }
+  });
+};
 
 /**
  * Default 401 Unauthorized exception handling
@@ -66,6 +95,9 @@ export const exception401 = async (
   } else {
     errorToast(id, error.response.data.detail);
   }
+  if (ignoreUrls.includes(location.pathname)) {
+    return;
+  }
   const status = await refreshAccessToken();
   if (status) {
     axiosRequest(url, method, data, id, config, callback);
@@ -73,13 +105,13 @@ export const exception401 = async (
 };
 
 export const exception403 = (id: Id, errors: any) => {
-  debugger;
+  console.log(id, errors);
 };
 
 export const exception404 = (id: Id, errors: any) => {
-  debugger;
+  console.log(id, errors);
 };
 
 export const exception500 = (id: Id, errors: any) => {
-  debugger;
+  console.log(id, errors);
 };

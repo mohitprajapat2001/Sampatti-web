@@ -7,7 +7,7 @@ import { AppRoutes } from "@/routes";
  * Third party Components
  * 1. react-toastify
  */
-import { ToastContainer } from "react-toastify";
+import { ToastContainer, Slide } from "react-toastify";
 
 /**
  * Sampatti App Providers
@@ -29,10 +29,14 @@ createRoot(document.getElementById("root")!).render(
             <ToastContainer
               draggablePercent={60}
               draggable
-              theme="dark"
+              stacked
               position="top-right"
               autoClose={5000}
-              stacked
+              hideProgressBar={false}
+              pauseOnFocusLoss
+              pauseOnHover
+              theme="colored"
+              transition={Slide}
             />
             <AppRoutes />
           </ThemeProvider>

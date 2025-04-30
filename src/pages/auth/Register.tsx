@@ -82,6 +82,7 @@ const Register = () => {
                     id="last_name"
                     autoComplete="false"
                   />
+                  <p className="text-xs italic text-destructive"></p>
                 </div>
               </div>
               <div
@@ -122,6 +123,7 @@ const Register = () => {
                   id="username"
                   autoComplete="false"
                 />
+                <p className="text-xs italic text-destructive"></p>
                 <p className="text-xs italic text-gray-500">
                   choose username else default username is generated.
                 </p>
