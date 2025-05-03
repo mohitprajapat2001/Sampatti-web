@@ -17,21 +17,30 @@ import { errorToast } from "./message-utils";
 
 const REFRESH_URL = getApiUrl("REFRESH");
 
-async function refreshAccessToken() {
+/**
+ * Refresh Token 
+ * @returns Promise
+ */
+async function refreshAccessToken(): Promise<boolean> {
   const refresh = getLocalStorage("refresh");
   if (!refresh) {
     return false;
   }
-  const response = await axios.post(REFRESH_URL, { refresh });
-  if (response.status !== 200) {
-    setLocalStorage(response.data);
-    return true;
-  } else {
-    removeLocalStorage("access");
-    removeLocalStorage("refresh");
-    redirectPage("/login");
-    return false;
+
+  try {
+    const response = await axios.post(REFRESH_URL, { refresh });
+    if (response.status === 200) {
+      setLocalStorage(response.data);
+      return true;
+    }
+  } catch (error) {
+    console.error(error)
   }
+
+  removeLocalStorage("access");
+  removeLocalStorage("refresh");
+  redirectPage("/login");
+  return false;
 }
 
 /**
@@ -86,21 +95,21 @@ export const exception401 = async (
   method: "GET" | "POST" | "PATCH" | "PUT" | "DELETE",
   data: any,
   id: Id,
-  config: any,
+  add_bearer: boolean,
   callback: (id: Id, response: AxiosResponse) => void,
   error: any
 ) => {
-  if (error.detail) {
-    errorToast(id, error.detail);
-  } else {
-    errorToast(id, error.response.data.detail);
+  if (error?.detail || error?.response?.data?.detail) {
+    errorToast(id, error.detail || error.response.data.detail);
   }
+
   if (ignoreUrls.includes(location.pathname)) {
     return;
   }
-  const status = await refreshAccessToken();
-  if (status) {
-    axiosRequest(url, method, data, id, config, callback);
+
+  const refreshed = await refreshAccessToken();
+  if (refreshed) {
+    axiosRequest(url, method, data, id, add_bearer, callback);
   }
 };
 

@@ -25,9 +25,20 @@ export async function axiosRequest(
   method: "GET" | "POST" | "PATCH" | "PUT" | "DELETE",
   data: any = null,
   id: Id,
-  config: AxiosRequestConfig = {},
+  add_bearer: boolean = true,
   callback?: (id: Id, response: AxiosResponse) => void
 ) {
+  const config: AxiosRequestConfig = {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+  if (add_bearer) {
+    const token = localStorage.getItem("access");
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+  }
   try {
     const response = await axios({
       url,
@@ -49,7 +60,7 @@ export async function axiosRequest(
         data,
         id,
         config,
-        callback || (() => {}),
+        callback || (() => { }),
         error
       );
     } else if (error.response.status === 403) {
@@ -67,11 +78,11 @@ export async function axiosRequest(
  */
 export async function getRequest(
   url: string,
-  id: Id,
-  config: AxiosRequestConfig = {},
+  id: Id | null,
+  add_bearer: boolean = true,
   callback?: (id: Id, response: AxiosResponse) => void
 ) {
-  return axiosRequest(url, "GET", null, id, config, callback);
+  return axiosRequest(url, "GET", null, id, add_bearer, callback);
 }
 
 /**
@@ -81,10 +92,10 @@ export async function postRequest(
   url: string,
   data: any,
   id: Id,
-  config: AxiosRequestConfig = {},
+  add_bearer: boolean = true,
   callback?: (id: Id, response: AxiosResponse) => void
 ) {
-  return axiosRequest(url, "POST", data, id, config, callback);
+  return axiosRequest(url, "POST", data, id, add_bearer, callback);
 }
 
 /**
@@ -94,10 +105,10 @@ export async function patchRequest(
   url: string,
   data: any,
   id: Id,
-  config: AxiosRequestConfig = {},
+  add_bearer: boolean = true,
   callback?: (id: Id, response: AxiosResponse) => void
 ) {
-  return axiosRequest(url, "PATCH", data, id, config, callback);
+  return axiosRequest(url, "PATCH", data, id, add_bearer, callback);
 }
 
 /**
@@ -107,10 +118,10 @@ export async function putRequest(
   url: string,
   data: any,
   id: Id,
-  config: AxiosRequestConfig = {},
+  add_bearer: boolean = true,
   callback?: (id: Id, response: AxiosResponse) => void
 ) {
-  return axiosRequest(url, "PUT", data, id, config, callback);
+  return axiosRequest(url, "PUT", data, id, add_bearer, callback);
 }
 
 /**
@@ -119,8 +130,8 @@ export async function putRequest(
 export async function deleteRequest(
   url: string,
   id: Id,
-  config: AxiosRequestConfig = {},
+  add_bearer: boolean = true,
   callback?: (id: Id, response: AxiosResponse) => void
 ) {
-  return axiosRequest(url, "DELETE", null, id, config, callback);
+  return axiosRequest(url, "DELETE", null, id, add_bearer, callback);
 }

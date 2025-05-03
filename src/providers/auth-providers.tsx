@@ -1,12 +1,14 @@
 /* eslint-disable */
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { getApiUrl } from "@/utils/constants";
-import { postRequest } from "@/utils/axios-request";
+import { getRequest, postRequest } from "@/utils/axios-request";
 import { loginSuccess, registerSuccess } from "@/utils/success";
 import { LoadingMessage } from "@/utils/loading-messages";
 import { loadingToast } from "@/utils/message-utils";
+import { getLocalStorage } from "@/utils/utils";
 const loginUrl = getApiUrl("LOGIN");
 const registerUrl = getApiUrl("REGISTER");
+const authUserUrl = getApiUrl("AUTH_USER")
 
 interface AuthContextType {
   auth: object;
@@ -19,40 +21,52 @@ const AuthContext = createContext<AuthContextType | null>(null);
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   let id = null;
   const { auth, setAuth } = useState<object>({});
+
+  /**
+   * Default login form handling action
+   * @param formdata object
+   */
   const loginUser = async (formdata: object) => {
     id = loadingToast(LoadingMessage.LOGIN, null);
     await postRequest(
       loginUrl,
       formdata,
       id,
-      {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      },
+      false,
       loginSuccess
     );
   };
 
+  /**
+   * Default register form handling action
+   * @param formdata object
+   */
   const registerUser = async (formdata: object) => {
     id = loadingToast(LoadingMessage.REGISTER, null);
     await postRequest(
       registerUrl,
       formdata,
       id,
-      {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      },
+      false,
       registerSuccess
     );
   };
+
+  /**
+   * Default authenticated user action
+  */
+  const getAuthenticatedUser = async () => {
+    const response = getRequest(authUserUrl, null, true, null)
+    console.log(response)
+  }
+
+
   useEffect(() => {
-    console.log(setAuth);
-  });
+    getAuthenticatedUser()
+  }, []);
   const data = {
     auth,
+    getAuthenticatedUser,
     loginUser,
     registerUser,
   };
