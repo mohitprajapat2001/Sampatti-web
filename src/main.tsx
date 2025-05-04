@@ -22,9 +22,9 @@ import { TokenProvider } from "./providers/token-provider";
 import { AuthProvider } from "./providers/auth-providers";
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <AuthProvider>
-      <TokenProvider>
-        <UtilsProvider>
+    <UtilsProvider>
+      <AuthProvider>
+        <TokenProvider>
           <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
             <ToastContainer
               draggablePercent={60}
@@ -40,8 +40,8 @@ createRoot(document.getElementById("root")!).render(
             />
             <AppRoutes />
           </ThemeProvider>
-        </UtilsProvider>
-      </TokenProvider>
-    </AuthProvider>
+        </TokenProvider>
+      </AuthProvider>
+    </UtilsProvider>
   </StrictMode>
 );

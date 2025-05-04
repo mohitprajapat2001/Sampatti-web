@@ -5,7 +5,8 @@ import { getRequest, postRequest } from "@/utils/axios-request";
 import { loginSuccess, registerSuccess } from "@/utils/success";
 import { LoadingMessage } from "@/utils/loading-messages";
 import { loadingToast } from "@/utils/message-utils";
-import { getLocalStorage } from "@/utils/utils";
+import { useUtilsContext } from "@/providers/utils-providers";
+
 const loginUrl = getApiUrl("LOGIN");
 const registerUrl = getApiUrl("REGISTER");
 const authUserUrl = getApiUrl("AUTH_USER")
@@ -21,6 +22,7 @@ const AuthContext = createContext<AuthContextType | null>(null);
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   let id = null;
   const { auth, setAuth } = useState<object>({});
+  const { updatePreloader } = useUtilsContext();
 
   /**
    * Default login form handling action
@@ -56,8 +58,10 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
    * Default authenticated user action
   */
   const getAuthenticatedUser = async () => {
-    const response = getRequest(authUserUrl, null, true, null)
-    console.log(response)
+    const response = await getRequest(authUserUrl, null, true, null)
+    if (response?.status === 200) {
+      updatePreloader();
+    }
   }
 
 

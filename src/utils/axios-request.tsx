@@ -26,7 +26,7 @@ export async function axiosRequest(
   data: any = null,
   id: Id,
   add_bearer: boolean = true,
-  callback?: (id: Id, response: AxiosResponse) => void
+  callback?: (id: Id, response: AxiosResponse) => void,
 ) {
   const config: AxiosRequestConfig = {
     headers: {
