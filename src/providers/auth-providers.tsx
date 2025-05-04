@@ -13,6 +13,7 @@ const authUserUrl = getApiUrl("AUTH_USER")
 
 interface AuthContextType {
   auth: object;
+  getAuthenticatedUser: () => Promise<void>;
   loginUser: (formdata: object) => Promise<void>;
   registerUser: (formdata: object) => Promise<void>;
 }
@@ -21,7 +22,7 @@ const AuthContext = createContext<AuthContextType | null>(null);
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   let id = null;
-  const { auth, setAuth } = useState<object>({});
+  const [auth, setAuth] = useState(null);
   const { updatePreloader } = useUtilsContext();
 
   /**
@@ -60,6 +61,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const getAuthenticatedUser = async () => {
     const response = await getRequest(authUserUrl, null, true, null)
     if (response?.status === 200) {
+      setAuth(response.data);
       updatePreloader();
     }
   }
