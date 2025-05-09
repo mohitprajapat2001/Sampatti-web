@@ -26,7 +26,7 @@ export async function axiosRequest(
   data: any = null,
   id: Id,
   add_bearer: boolean = true,
-  callback?: (id: Id, response: AxiosResponse) => void,
+  callback?: (id: Id, response: AxiosResponse) => void
 ) {
   const config: AxiosRequestConfig = {
     headers: {
@@ -60,7 +60,7 @@ export async function axiosRequest(
         data,
         id,
         config,
-        callback || (() => { }),
+        callback || (() => {}),
         error
       );
     } else if (error.response.status === 403) {
@@ -80,7 +80,7 @@ export async function getRequest(
   url: string,
   id: Id | null,
   add_bearer: boolean = true,
-  callback?: (id: Id, response: AxiosResponse) => void
+  callback?: (id: Id, response: AxiosResponse) => void | null
 ) {
   return axiosRequest(url, "GET", null, id, add_bearer, callback);
 }

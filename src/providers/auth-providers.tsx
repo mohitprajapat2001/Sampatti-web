@@ -12,7 +12,7 @@ const registerUrl = getApiUrl("REGISTER");
 const authUserUrl = getApiUrl("AUTH_USER")
 
 interface AuthContextType {
-  auth: object;
+  auth: object|null;
   getAuthenticatedUser: () => Promise<void>;
   loginUser: (formdata: object) => Promise<void>;
   registerUser: (formdata: object) => Promise<void>;

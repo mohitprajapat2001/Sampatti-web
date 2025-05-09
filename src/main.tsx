@@ -20,9 +20,11 @@ import { ThemeProvider } from "@/providers/theme-providers";
 import { UtilsProvider } from "./providers/utils-providers";
 import { TokenProvider } from "./providers/token-provider";
 import { AuthProvider } from "./providers/auth-providers";
+import { NotificationsProvider } from "./providers/notifications-providers";
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <UtilsProvider>
+    <NotificationsProvider>
       <AuthProvider>
         <TokenProvider>
           <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
@@ -42,6 +44,7 @@ createRoot(document.getElementById("root")!).render(
           </ThemeProvider>
         </TokenProvider>
       </AuthProvider>
+    </NotificationsProvider>
     </UtilsProvider>
   </StrictMode>
 );
