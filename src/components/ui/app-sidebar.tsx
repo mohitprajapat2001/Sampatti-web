@@ -29,7 +29,7 @@ const data = {
   navMain: [
     {
       title: "Dashboard",
-      url: "#",
+      url: "/dashboard",
       icon: LayoutDashboard,
       isActive: false,
       items: null,
@@ -42,15 +42,15 @@ const data = {
       items: [
         {
           title: "Money Transfer",
-          url: "#",
+          url: "money-transfer",
         },
         {
           title: "UPI",
-          url: "#",
+          url: "upi",
         },
         {
           title: "Transactions",
-          url: "#",
+          url: "transactions",
         },
       ],
     },
@@ -62,15 +62,15 @@ const data = {
       items: [
         {
           title: "Credit Card",
-          url: "#",
+          url: "cards-credit",
         },
         {
           title: "Debit Card",
-          url: "#",
+          url: "cards-debit",
         },
         {
           title: "Card Offers",
-          url: "#",
+          url: "cards-offer",
         },
       ],
     },
@@ -78,17 +78,17 @@ const data = {
   projects: [
     {
       name: "Fixed Deposts",
-      url: "#",
+      url: "fixed-deposit",
       icon: BookLock,
     },
     {
       name: "Cibil Score",
-      url: "#",
+      url: "cibil-score",
       icon: ShieldCheck,
     },
     {
       name: "Loan",
-      url: "#",
+      url: "loan",
       icon: HandCoins,
     },
   ],

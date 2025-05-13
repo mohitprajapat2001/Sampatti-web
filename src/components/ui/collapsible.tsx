@@ -1,9 +1,10 @@
 import * as CollapsiblePrimitive from "@radix-ui/react-collapsible"
-
+import { useSidebar } from "./sidebar"
 function Collapsible({
   ...props
 }: React.ComponentProps<typeof CollapsiblePrimitive.Root>) {
-  return <CollapsiblePrimitive.Root data-slot="collapsible" {...props} />
+  const { open,toggleSidebar } = useSidebar()
+  return <CollapsiblePrimitive.Root data-slot="collapsible" onClick={open ? undefined : toggleSidebar} {...props} />
 }
 
 function CollapsibleTrigger({
