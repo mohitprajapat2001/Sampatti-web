@@ -9,10 +9,10 @@ import { useUtilsContext } from "@/providers/utils-providers";
 
 const loginUrl = getApiUrl("LOGIN");
 const registerUrl = getApiUrl("REGISTER");
-const authUserUrl = getApiUrl("AUTH_USER")
+const authUserUrl = getApiUrl("AUTH_USER");
 
 interface AuthContextType {
-  auth: object|null;
+  auth: any | null;
   getAuthenticatedUser: () => Promise<void>;
   loginUser: (formdata: object) => Promise<void>;
   registerUser: (formdata: object) => Promise<void>;
@@ -31,13 +31,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
    */
   const loginUser = async (formdata: object) => {
     id = loadingToast(LoadingMessage.LOGIN, null);
-    await postRequest(
-      loginUrl,
-      formdata,
-      id,
-      false,
-      loginSuccess
-    );
+    await postRequest(loginUrl, formdata, id, false, loginSuccess);
   };
 
   /**
@@ -46,29 +40,22 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
    */
   const registerUser = async (formdata: object) => {
     id = loadingToast(LoadingMessage.REGISTER, null);
-    await postRequest(
-      registerUrl,
-      formdata,
-      id,
-      false,
-      registerSuccess
-    );
+    await postRequest(registerUrl, formdata, id, false, registerSuccess);
   };
 
   /**
    * Default authenticated user action
-  */
+   */
   const getAuthenticatedUser = async () => {
-    const response = await getRequest(authUserUrl, null, true, null)
+    const response = await getRequest(authUserUrl, null, true, null);
     if (response?.status === 200) {
       setAuth(response.data);
       updatePreloader();
     }
-  }
-
+  };
 
   useEffect(() => {
-    getAuthenticatedUser()
+    getAuthenticatedUser();
   }, []);
   const data = {
     auth,

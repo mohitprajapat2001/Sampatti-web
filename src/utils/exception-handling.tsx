@@ -18,7 +18,7 @@ import { errorToast } from "./message-utils";
 const REFRESH_URL = getApiUrl("REFRESH");
 
 /**
- * Refresh Token 
+ * Refresh Token
  * @returns Promise
  */
 async function refreshAccessToken(): Promise<boolean> {
@@ -34,7 +34,7 @@ async function refreshAccessToken(): Promise<boolean> {
       return true;
     }
   } catch (error) {
-    console.error(error)
+    console.error(error);
   }
 
   removeLocalStorage("access");
@@ -48,7 +48,7 @@ async function refreshAccessToken(): Promise<boolean> {
  * @param id Id
  * @param errors any
  */
-export const exception400 = (id: Id, errors: any) => {
+export const exception400 = (id: Id | null, errors: any) => {
   let toastUpdate = true;
   Object.entries(errors).forEach(([key, value]) => {
     let element = document.querySelector(`input[name="${key}"]`);
@@ -94,9 +94,9 @@ export const exception401 = async (
   url: string,
   method: "GET" | "POST" | "PATCH" | "PUT" | "DELETE",
   data: any,
-  id: Id,
+  id: Id | null,
   add_bearer: boolean,
-  callback: (id: Id, response: AxiosResponse) => void,
+  callback: (id: Id | null, response: AxiosResponse) => void,
   error: any
 ) => {
   if (error?.detail || error?.response?.data?.detail) {
@@ -113,14 +113,14 @@ export const exception401 = async (
   }
 };
 
-export const exception403 = (id: Id, errors: any) => {
+export const exception403 = (id: Id | null, errors: any) => {
   console.log(id, errors);
 };
 
-export const exception404 = (id: Id, errors: any) => {
+export const exception404 = (id: Id | null, errors: any) => {
   console.log(id, errors);
 };
 
-export const exception500 = (id: Id, errors: any) => {
+export const exception500 = (id: Id | null, errors: any) => {
   console.log(id, errors);
 };

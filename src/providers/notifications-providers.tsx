@@ -1,10 +1,8 @@
 /* eslint-disable */
 import React, { createContext, useContext, useEffect, useState } from "react";
-import { getApiUrl } from "@/utils/constants";
-import { getRequest } from "@/utils/axios-request";
 
 interface NotificationContextType {
-  notifications: null | object;
+  notifications: object | null;
   getNotifications: () => Promise<void>;
 }
 
@@ -15,7 +13,6 @@ export const NotificationsProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
-  let id = null;
   const [notifications, setNotifications] = useState([{ title: "Hello" }]);
 
   /**
@@ -28,7 +25,7 @@ export const NotificationsProvider = ({
   useEffect(() => {
     getNotifications();
     setTimeout(() => {
-      setNotifications(null);
+      setNotifications([]);
     }, 5000);
   }, []);
   const data = {

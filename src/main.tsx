@@ -21,30 +21,33 @@ import { UtilsProvider } from "./providers/utils-providers";
 import { TokenProvider } from "./providers/token-provider";
 import { AuthProvider } from "./providers/auth-providers";
 import { NotificationsProvider } from "./providers/notifications-providers";
+import { TransactionProvider } from "./providers/transaction-providers";
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <UtilsProvider>
-    <NotificationsProvider>
-      <AuthProvider>
-        <TokenProvider>
-          <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
-            <ToastContainer
-              draggablePercent={60}
-              draggable
-              stacked
-              position="top-right"
-              autoClose={5000}
-              hideProgressBar={false}
-              pauseOnFocusLoss
-              pauseOnHover
-              theme="colored"
-              transition={Slide}
-            />
-            <AppRoutes />
-          </ThemeProvider>
-        </TokenProvider>
-      </AuthProvider>
-    </NotificationsProvider>
+      <NotificationsProvider>
+        <AuthProvider>
+          <TransactionProvider>
+            <TokenProvider>
+              <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
+                <ToastContainer
+                  draggablePercent={60}
+                  draggable
+                  stacked
+                  position="top-right"
+                  autoClose={5000}
+                  hideProgressBar={false}
+                  pauseOnFocusLoss
+                  pauseOnHover
+                  theme="colored"
+                  transition={Slide}
+                />
+                <AppRoutes />
+              </ThemeProvider>
+            </TokenProvider>
+          </TransactionProvider>
+        </AuthProvider>
+      </NotificationsProvider>
     </UtilsProvider>
   </StrictMode>
 );

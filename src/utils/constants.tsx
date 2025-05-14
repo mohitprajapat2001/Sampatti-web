@@ -12,7 +12,11 @@ export const UrlPaths = {
   LOGIN: "users/login",
   REFRESH: "users/login/refresh",
   REGISTER: "users/register",
-  AUTH_USER: "api/v1/users/me/"
+  AUTH_USER: "api/v1/users/me/",
+  /**
+   * Transaction Urls
+   */
+  TRANSACTION: "api/v1/transactions/",
 };
 
 export const getApiUrl = (path: string) => {
