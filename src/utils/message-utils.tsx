@@ -4,7 +4,11 @@
 import { toast, Id, TypeOptions } from "react-toastify";
 import { redirectPageLazy } from "./utils";
 
-const UpdateToast = (id: Id, message: string, typee: string) => {
+// eslint-disable-next-line react-refresh/only-export-components
+const UpdateToast = (id: Id | null, message: string, typee: string) => {
+  if (!id) {
+    return;
+  }
   toast.update(id, {
     render: message,
     type: typee as TypeOptions,
@@ -15,15 +19,22 @@ const UpdateToast = (id: Id, message: string, typee: string) => {
   });
 };
 
-export const loadingToast = (message: string, options: any) => {
-  return toast.loading(message, options);
+export const loadingToast = (message: string, options: object | null) => {
+  if (options) {
+    return toast.loading(message, options);
+  }
+  return toast.loading(message);
 };
 
-export const errorToast = (id: Id, message: string) => {
+export const errorToast = (id: Id | null | null, message: string) => {
   UpdateToast(id, message, "error");
 };
 
-export const successToast = (id: Id, message: string, successUrl: string) => {
+export const successToast = (
+  id: Id | null,
+  message: string,
+  successUrl: string
+) => {
   UpdateToast(id, message, "success");
   if (successUrl) {
     redirectPageLazy(successUrl);
