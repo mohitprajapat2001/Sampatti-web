@@ -14,7 +14,14 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 
-export function SectionCards({ data }: object | null) {
+type averageType = {
+  title: string;
+  description: string;
+  lastMonth: number;
+  thisMonth: number;
+};
+
+export function SectionCards({ data }: { data: averageType }) {
   const average = data.thisMonth / data.lastMonth - 100;
   return (
     <Card className="@container/card p-4 px-0">

@@ -16,8 +16,7 @@ export const UtilsProvider = ({ children }: { children: React.ReactNode }) => {
   /**
    * Function to update the preloader state
    */
-  const updatePreloader = (
-  ) => {
+  const updatePreloader = () => {
     setPreloader(false);
   };
 
@@ -25,6 +24,7 @@ export const UtilsProvider = ({ children }: { children: React.ReactNode }) => {
   return <UtilsContext.Provider value={data}>{children}</UtilsContext.Provider>;
 };
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const useUtilsContext = () => {
   const context = useContext(UtilsContext);
   if (!context) {

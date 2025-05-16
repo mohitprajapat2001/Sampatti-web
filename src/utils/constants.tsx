@@ -9,6 +9,23 @@ export const PORT = "8000/";
 export const ApiUrl = HTTP + HOST + PORT;
 
 export const UrlPaths = {
+  /**
+   * Static Urls
+   */
+  CITIES: "api/v1/cities/",
+  CARD_TYPES: "api/v1/cardtypes/",
+  ACCOUNT_TYPES: "api/v1/accounttypes/",
+  ADDRESS_TYPES: "api/v1/addresstypes/",
+  ACCOUNT_STATUS: "api/v1/accountstatus/",
+  GENDERS: "api/v1/genders/",
+  MARRITIAL_STATUS: "api/v1/marritialstatus/",
+  QUESTIONS: "api/v1/questions/",
+  TRANSACTION_TYPES: "api/v1/transactiontypes/",
+  RELATIONSHIP: "api/v1/relationship/",
+
+  /**
+   * Account Urls
+   */
   LOGIN: "users/login",
   REFRESH: "users/login/refresh",
   REGISTER: "users/register",

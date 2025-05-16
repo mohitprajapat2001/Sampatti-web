@@ -26,7 +26,10 @@ export async function axiosRequest(
   data: any = null,
   id: Id | null,
   add_bearer: boolean = true,
-  callback?: ((id: Id | null, response: AxiosResponse) => void) | null
+  callback?:
+    | ((id: Id | null, response: AxiosResponse) => void)
+    | undefined
+    | null
 ) {
   const config: AxiosRequestConfig = {
     headers: {

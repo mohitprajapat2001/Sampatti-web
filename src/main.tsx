@@ -22,32 +22,38 @@ import { TokenProvider } from "./providers/token-provider";
 import { AuthProvider } from "./providers/auth-providers";
 import { NotificationsProvider } from "./providers/notifications-providers";
 import { TransactionProvider } from "./providers/transaction-providers";
+import { StaticProvider } from "./providers/static-providers";
+import { TooltipProvider } from "./components/ui/tooltip";
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <UtilsProvider>
-      <NotificationsProvider>
-        <AuthProvider>
-          <TransactionProvider>
-            <TokenProvider>
-              <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
-                <ToastContainer
-                  draggablePercent={60}
-                  draggable
-                  stacked
-                  position="top-right"
-                  autoClose={5000}
-                  hideProgressBar={false}
-                  pauseOnFocusLoss
-                  pauseOnHover
-                  theme="colored"
-                  transition={Slide}
-                />
-                <AppRoutes />
-              </ThemeProvider>
-            </TokenProvider>
-          </TransactionProvider>
-        </AuthProvider>
-      </NotificationsProvider>
+      <StaticProvider>
+        <NotificationsProvider>
+          <AuthProvider>
+            <TransactionProvider>
+              <TokenProvider>
+                <TooltipProvider>
+                  <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
+                    <ToastContainer
+                      draggablePercent={60}
+                      draggable
+                      stacked
+                      position="top-right"
+                      autoClose={5000}
+                      hideProgressBar={false}
+                      pauseOnFocusLoss
+                      pauseOnHover
+                      theme="colored"
+                      transition={Slide}
+                    />
+                    <AppRoutes />
+                  </ThemeProvider>
+                </TooltipProvider>
+              </TokenProvider>
+            </TransactionProvider>
+          </AuthProvider>
+        </NotificationsProvider>
+      </StaticProvider>
     </UtilsProvider>
   </StrictMode>
 );
