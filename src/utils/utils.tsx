@@ -1,9 +1,7 @@
-import { url } from "inspector";
-
 /**
  * Sampatti Web Utilities
  */
-export const setLocalStorage = (instance: any) => {
+export const setLocalStorage = (instance: { [key: string]: string }) => {
   for (const key in instance) {
     localStorage.setItem(key, instance[key]);
   }

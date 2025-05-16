@@ -2,16 +2,17 @@
  * Transaction Provider
  */
 
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useContext, useState } from "react";
 import { getApiUrl, ApiUrl } from "@/utils/constants";
 import { getRequest } from "@/utils/axios-request";
 import { useAuthContext } from "./auth-providers";
+import { TransactionsType, averageTransactionsType } from "@/utils/types";
 const transactionUrl = getApiUrl("TRANSACTION");
 
 interface TransactionContextType {
-  transactions: object | null;
-  getTransactions: () => Promise<void>;
-  averageTransactions: object | null;
+  transactions: TransactionsType | null;
+  getTransactions: (transactionType?: string) => Promise<void>;
+  averageTransactions: averageTransactionsType | null;
   getAverageTransactions: () => Promise<void>;
 }
 
@@ -26,9 +27,23 @@ export const TransactionProvider = ({
   const [transactions, setTransactions] = useState(null);
   const [averageTransactions, setAverageTransactions] = useState(null);
 
-  const getTransactions = async () => {
-    const response = await getRequest(transactionUrl, null, true, null);
-    setTransactions(response?.data);
+  /**
+   * Fetches transactions from the API based on the specified transaction type.
+   * If no transaction type is provided, fetches all transactions.
+   * Updates the transactions state with the response data.
+   *
+   * @param {string} transactionType - The type of transactions to fetch. Defaults to an empty string, which fetches all transactions.
+   */
+  const getTransactions = async (transactionType: string | null = "") => {
+    const response = await getRequest(
+      transactionUrl + `?transaction_type=${transactionType}`,
+      null,
+      true,
+      null
+    );
+    if (response?.status === 200) {
+      setTransactions(response?.data);
+    }
   };
   const getAverageTransactions = async () => {
     if (auth) {
@@ -41,9 +56,6 @@ export const TransactionProvider = ({
       setAverageTransactions(response?.data);
     }
   };
-  useEffect(() => {
-    getTransactions();
-  }, []);
   const data = {
     transactions,
     getTransactions,

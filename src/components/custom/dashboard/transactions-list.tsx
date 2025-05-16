@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Card } from "@/components/ui/card";
 import {
   Select,
@@ -11,105 +11,159 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import {
   Table,
   TableBody,
-  TableCaption,
   TableCell,
-  TableFooter,
   TableHead,
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { useTransaction } from "@/providers/transaction-providers";
+import { useStaticContext } from "@/providers/static-providers";
+import { ArrowRight, IndianRupee } from "lucide-react";
+import ListSkeleton from "@/components/ui/skeleton-list";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+import { RainbowButton } from "@/components/magicui/rainbow-button";
+import { Link } from "react-router-dom";
 const TransactionsList = ({ className }: React.ComponentProps<"div">) => {
-  const invoices = [
-    {
-      invoice: "INV001",
-      paymentStatus: "Paid",
-      totalAmount: "$250.00",
-      paymentMethod: "Credit Card",
-    },
-    {
-      invoice: "INV002",
-      paymentStatus: "Pending",
-      totalAmount: "$150.00",
-      paymentMethod: "PayPal",
-    },
-    {
-      invoice: "INV003",
-      paymentStatus: "Unpaid",
-      totalAmount: "$350.00",
-      paymentMethod: "Bank Transfer",
-    },
-    {
-      invoice: "INV004",
-      paymentStatus: "Paid",
-      totalAmount: "$450.00",
-      paymentMethod: "Credit Card",
-    },
-    {
-      invoice: "INV005",
-      paymentStatus: "Paid",
-      totalAmount: "$550.00",
-      paymentMethod: "PayPal",
-    },
-    {
-      invoice: "INV006",
-      paymentStatus: "Pending",
-      totalAmount: "$200.00",
-      paymentMethod: "Bank Transfer",
-    },
-    {
-      invoice: "INV007",
-      paymentStatus: "Unpaid",
-      totalAmount: "$300.00",
-      paymentMethod: "Credit Card",
-    },
-  ];
+  const { transactions, getTransactions } = useTransaction();
+  const { transactionTypes, getTransactionTypes } = useStaticContext();
 
+  /**Handle Transaction Type Change */
+  const handleChange = (value: string) => {
+    if (value === "all") {
+      getTransactions();
+      return;
+    }
+    getTransactions(value);
+  };
+
+  useEffect(() => {
+    if (!transactions) {
+      getTransactions();
+    }
+    if (!transactionTypes) {
+      getTransactionTypes();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [transactions, transactionTypes]);
   return (
     <Card className={className + " flex flex-col gap-4 p-4"}>
       <div className="flex justify-end md:justify-between items-center">
         <div className="hidden md:block">Transactions</div>
-        <Select defaultValue="all">
-          <SelectTrigger className="w-min">
-            <SelectValue placeholder="Transactions" />
-          </SelectTrigger>
+        <Select defaultValue="all" onValueChange={handleChange}>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <SelectTrigger className="w-min">
+                <SelectValue placeholder="Transactions" />
+              </SelectTrigger>
+            </TooltipTrigger>
+            <TooltipContent>filter transaction by type</TooltipContent>
+          </Tooltip>
           <SelectContent>
-            <SelectItem value="debit">Debit</SelectItem>
-            <SelectItem value="credit">Credit</SelectItem>
+            {transactionTypes &&
+              transactionTypes.map((type: { text: string; value: string }) => (
+                <SelectItem key={type.value} value={type.value}>
+                  {type.text}
+                </SelectItem>
+              ))}
             <SelectItem value="all">All</SelectItem>
           </SelectContent>
         </Select>
       </div>
-      <ScrollArea className="h-75 py-4">
-        <Table>
-          <TableCaption>A list of your recent invoices.</TableCaption>
-          <TableHeader>
-            <TableRow>
-              <TableHead className="w-[100px]">Invoice</TableHead>
-              <TableHead>Status</TableHead>
-              <TableHead>Method</TableHead>
-              <TableHead className="text-right">Amount</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {invoices.map((invoice) => (
-              <TableRow key={invoice.invoice}>
-                <TableCell className="font-medium">{invoice.invoice}</TableCell>
-                <TableCell>{invoice.paymentStatus}</TableCell>
-                <TableCell>{invoice.paymentMethod}</TableCell>
-                <TableCell className="text-right">
-                  {invoice.totalAmount}
-                </TableCell>
+      <ScrollArea className="h-175 py-4">
+        {transactions ? (
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead className="w-[100px]">Date</TableHead>
+                <TableHead>Type</TableHead>
+                <TableHead className="text-right">Amount</TableHead>
               </TableRow>
-            ))}
-          </TableBody>
-          <TableFooter>
-            <TableRow>
-              <TableCell colSpan={3}>Total</TableCell>
-              <TableCell className="text-right">$2,500.00</TableCell>
-            </TableRow>
-          </TableFooter>
-        </Table>
+            </TableHeader>
+            <TableBody>
+              {(transactions &&
+                transactions.results?.map(
+                  (transaction: { [key: string]: string }) => (
+                    <TableRow key={transaction.id}>
+                      <TableCell>
+                        <div className="flex flex-col items-start justify-center">
+                          <p className="">
+                            {new Date(transaction.modified).toLocaleDateString(
+                              "en-US",
+                              {
+                                day: "numeric",
+                                month: "short",
+                                year: "numeric",
+                              }
+                            )}
+                          </p>
+                          <p className="text-xs text-gray-500">
+                            {new Date(transaction.modified).toLocaleTimeString(
+                              "en-US",
+                              {
+                                hour: "numeric",
+                                minute: "numeric",
+                              }
+                            )}
+                          </p>
+                        </div>
+                      </TableCell>
+                      <TableCell>
+                        {transactionTypes &&
+                          transactionTypes.map(
+                            (type: { text: string; value: string }) => {
+                              if (type.value === transaction.transaction_type) {
+                                return type.text;
+                              }
+                            }
+                          )}
+                      </TableCell>
+                      <TableCell className="text-right">
+                        <span className="flex items-center">
+                          <IndianRupee className="size-3" />
+                          {transaction.amount}
+                        </span>
+                      </TableCell>
+                    </TableRow>
+                  )
+                )) || (
+                <TableRow>
+                  <TableCell colSpan={3} className="text-center">
+                    No transactions
+                  </TableCell>
+                </TableRow>
+              )}
+            </TableBody>
+          </Table>
+        ) : (
+          <>
+            <Table>
+              <TableBody>
+                {[...Array(10)].map((_, index) => (
+                  <TableRow key={index}>
+                    <TableCell colSpan={3} className="text-center">
+                      <ListSkeleton />
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </>
+        )}
       </ScrollArea>
+      <div className="flex justify-start mb-3">
+        <Link to="/transactions">
+          <RainbowButton className="group flex justify-start items-center gap-3">
+            <span>View all transactions</span>
+            <span>
+              <ArrowRight className="size-3 group-hover:translate-x-2 group-hover:size-4 transition-all duration-300" />
+            </span>
+          </RainbowButton>
+        </Link>
+      </div>
     </Card>
   );
 };
