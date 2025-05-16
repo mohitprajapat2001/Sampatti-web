@@ -19,6 +19,19 @@ export type averageTransactionsType = {
   this_month_average_transfer_transactions: number;
 };
 
+export type expenseReportType = {
+  id: number;
+  username: string;
+  get_full_name: string;
+  email: string;
+  status: string;
+  seven_days: Array<{ data: string; value: string }>;
+  one_month: Array<{ data: string; value: string }>;
+  three_month: Array<{ data: string; value: string }>;
+};
+
+export type chartDataType = Array<{ data: string; value: string }>;
+
 export type citiesType = {
   count: number;
   next: string | null;

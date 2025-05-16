@@ -6,7 +6,11 @@ import { createContext, useContext, useState } from "react";
 import { getApiUrl, ApiUrl } from "@/utils/constants";
 import { getRequest } from "@/utils/axios-request";
 import { useAuthContext } from "./auth-providers";
-import { TransactionsType, averageTransactionsType } from "@/utils/types";
+import {
+  TransactionsType,
+  averageTransactionsType,
+  expenseReportType,
+} from "@/utils/types";
 const transactionUrl = getApiUrl("TRANSACTION");
 
 interface TransactionContextType {
@@ -14,6 +18,8 @@ interface TransactionContextType {
   getTransactions: (transactionType?: string) => Promise<void>;
   averageTransactions: averageTransactionsType | null;
   getAverageTransactions: () => Promise<void>;
+  expenseReport: expenseReportType | null;
+  getExpenseReport: () => Promise<void>;
 }
 
 const TransactionContext = createContext<TransactionContextType | null>(null);
@@ -26,6 +32,7 @@ export const TransactionProvider = ({
   const { auth } = useAuthContext();
   const [transactions, setTransactions] = useState(null);
   const [averageTransactions, setAverageTransactions] = useState(null);
+  const [expenseReport, setExpenseReport] = useState(null);
 
   /**
    * Fetches transactions from the API based on the specified transaction type.
@@ -45,6 +52,7 @@ export const TransactionProvider = ({
       setTransactions(response?.data);
     }
   };
+
   const getAverageTransactions = async () => {
     if (auth) {
       const response = await getRequest(
@@ -56,11 +64,27 @@ export const TransactionProvider = ({
       setAverageTransactions(response?.data);
     }
   };
+
+  const getExpenseReport = async () => {
+    if (!auth) return;
+    const response = await getRequest(
+      ApiUrl + `api/v1/users/${auth?.id}/expense_report/`,
+      null,
+      true,
+      null
+    );
+    if (response?.status === 200) {
+      setExpenseReport(response?.data);
+    }
+  };
+
   const data = {
     transactions,
     getTransactions,
     averageTransactions,
     getAverageTransactions,
+    expenseReport,
+    getExpenseReport,
   };
   return (
     <TransactionContext.Provider value={data}>

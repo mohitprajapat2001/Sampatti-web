@@ -13,7 +13,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-
+import { Skeleton } from "@/components/ui/skeleton";
 type averageType = {
   title: string;
   description: string;
@@ -22,7 +22,7 @@ type averageType = {
 };
 
 export function SectionCards({ data }: { data: averageType }) {
-  const average = data.thisMonth / data.lastMonth - 100;
+  const average = data.thisMonth / (data.lastMonth | 1) - 100;
   return (
     <Card className="@container/card p-4 px-0">
       <CardHeader className="relative">
@@ -30,30 +30,39 @@ export function SectionCards({ data }: { data: averageType }) {
           <CardDescription>{data.title}</CardDescription>
           <div className="">
             <Badge variant="outline" className="flex gap-1 rounded-lg text-xs">
-              {(average > 0 && (
-                <>
-                  <TrendingUp className="size-3" />
-                  <span>{average.toFixed(2)}</span>
-                </>
-              )) ||
-                (average < 0 && (
+              {(average &&
+                ((average > 0 && (
                   <>
-                    <TrendingDownIcon className="size-3" />
+                    <TrendingUp className="size-3" />
                     <span>{average.toFixed(2)}</span>
                   </>
-                )) || (
-                  <>
-                    <EqualApproximately className="size-3" />
-                    <span>0</span>
-                  </>
-                )}
+                )) ||
+                  (average < 0 && (
+                    <>
+                      <TrendingDownIcon className="size-3" />
+                      <span>{average.toFixed(2)}</span>
+                    </>
+                  )) || (
+                    <>
+                      <EqualApproximately className="size-3" />
+                      <span>0</span>
+                    </>
+                  ))) || (
+                <>
+                  <Skeleton className="h-3 w-8 rounded-sm" />
+                </>
+              )}
             </Badge>
           </div>
         </div>
         <CardTitle className="@[250px]/card:text-3xl text-2xl font-semibold tabular-nums">
           <p className="flex items-center justify-start">
             <IndianRupee />
-            {data.lastMonth}
+            {(data && data.thisMonth?.toFixed(2)) || (
+              <>
+                <Skeleton className="h-8 w-20 rounded-sm" />
+              </>
+            )}
           </p>
         </CardTitle>
       </CardHeader>

@@ -63,7 +63,6 @@ export default function Dashboard() {
           <div className="grid gap-4 grid-cols-1 lg:grid-cols-5">
             <div className="lg:col-span-3 flex flex-col gap-4">
               <ExpensesChart />
-              <ExpensesChart />
             </div>
             <TransactionsList className="lg:col-span-2" />
           </div>
